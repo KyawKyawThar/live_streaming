@@ -1,0 +1,1085 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "Swagger API Live Stream.",
+        "title": "API Live Stream",
+        "contact": {},
+        "version": "1.0"
+    },
+    "host": "localhost:8787",
+    "basePath": "/",
+    "paths": {
+        "/api/auth/login": {
+            "post": {
+                "description": "Authenticates the user and returns a JWT token",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Login a user",
+                "parameters": [
+                    {
+                        "description": "User Login Data",
+                        "name": "login",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.LoginRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Login successful",
+                        "schema": {
+                            "$ref": "#/definitions/dto.LoginResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request"
+                    }
+                }
+            }
+        },
+        "/api/notification/list": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Get notification list",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Notification"
+                ],
+                "summary": "Get Notifications",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Page number",
+                        "name": "page",
+                        "in": "query",
+                        "required": true
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Number of items per page",
+                        "name": "limit",
+                        "in": "query",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/dto.NotificationDto"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "/api/notification/num": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Get the number of notifications",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Notification"
+                ],
+                "summary": "Get Num-Notification",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.NotificationNumResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "/api/notification/reset-num": {
+            "put": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Reset the number of notifications",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Notification"
+                ],
+                "summary": "Reset Num-Notification",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.NotificationNumResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "/api/notification/{id}/hidden": {
+            "put": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Update notification has been hidden by NotificationID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Notification"
+                ],
+                "summary": "Hidden Notification",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Notification ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "/api/notification/{id}/read": {
+            "put": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Update notification has been read by NotificationID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Notification"
+                ],
+                "summary": "Read Notification",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Notification ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.NotificationReadResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "/api/streams": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Fetch a list of streams with optional filters",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Stream"
+                ],
+                "summary": "Get Streams",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "default": 1,
+                        "description": "Page number",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "default": 10,
+                        "description": "Number of items per page",
+                        "name": "limit",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "default": "",
+                        "description": "Status of the stream",
+                        "name": "status",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Title filter",
+                        "name": "title",
+                        "in": "query"
+                    },
+                    {
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        },
+                        "collectionFormat": "multi",
+                        "description": "Category IDs",
+                        "name": "category_ids",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "Filter by user streams",
+                        "name": "is_me",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "Filter by liked streams",
+                        "name": "is_liked",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "Filter by history streams",
+                        "name": "is_history",
+                        "in": "query"
+                    },
+                    {
+                        "type": "boolean",
+                        "description": "Filter by saved streams",
+                        "name": "is_saved",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "description": "Filter by streamer",
+                        "name": "streamer_id",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "Start date for filtering (yyyy-MM-dd)",
+                        "name": "from_date",
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "description": "End date for filtering (yyyy-MM-dd)",
+                        "name": "to_date",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/dto.StreamDto"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "/api/streams/channel/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Get channel insights and statistics",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Stream"
+                ],
+                "summary": "Get Channel",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "ID streamer",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.StreamChannelDto"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "/api/streams/{id}": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Fetch detailed information of a specific stream by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Stream"
+                ],
+                "summary": "Get Stream Details",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Stream ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.StreamDetailDto"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "/api/streams/{id}/bookmark": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Bookmark stream by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Stream"
+                ],
+                "summary": "Bookmark stream",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "ID stream",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            },
+            "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Remove the bookmark stream by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Stream"
+                ],
+                "summary": "Remove the bookmark stream",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "ID stream",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "/api/streams/{id}/share": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "User adds 1 share",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Stream"
+                ],
+                "summary": "Add Share",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "ID stream",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.StreamAddShareResponse"
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "/api/subscribe/list": {
+            "get": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Fetch a list of subscribes with optional filters",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Subscribe"
+                ],
+                "summary": "Get Subscribes",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "default": 1,
+                        "description": "Page number",
+                        "name": "page",
+                        "in": "query"
+                    },
+                    {
+                        "type": "integer",
+                        "default": 10,
+                        "description": "Number of items per page",
+                        "name": "limit",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/dto.SubscribeDto"
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    }
+                }
+            }
+        },
+        "/api/subscribe/mute": {
+            "put": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "Mute subscriber notifications",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Subscribe"
+                ],
+                "summary": "Mute",
+                "parameters": [
+                    {
+                        "description": "Mute subscriber notifications",
+                        "name": "mute",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.SubscribeMuteRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/dto.SubscribeMuteResponse"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "dto.CategoryDto": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.LikeInfo": {
+            "type": "object",
+            "properties": {
+                "dislike": {
+                    "type": "integer"
+                },
+                "heart": {
+                    "type": "integer"
+                },
+                "laugh": {
+                    "type": "integer"
+                },
+                "like": {
+                    "type": "integer"
+                },
+                "sad": {
+                    "type": "integer"
+                },
+                "total": {
+                    "type": "integer"
+                },
+                "wow": {
+                    "type": "integer"
+                }
+            }
+        },
+        "dto.LoginRequest": {
+            "type": "object",
+            "required": [
+                "password",
+                "username"
+            ],
+            "properties": {
+                "password": {
+                    "type": "string",
+                    "minLength": 4
+                },
+                "username": {
+                    "type": "string",
+                    "minLength": 4
+                }
+            }
+        },
+        "dto.LoginResponse": {
+            "type": "object",
+            "properties": {
+                "avatar_file_url": {
+                    "type": "string"
+                },
+                "display_name": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "expiration_time": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "role_type": {
+                    "$ref": "#/definitions/model.RoleType"
+                },
+                "token": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.NotificationDto": {
+            "type": "object",
+            "properties": {
+                "avatar_url": {
+                    "type": "string"
+                },
+                "content": {
+                    "type": "string"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "is_mute": {
+                    "type": "boolean"
+                },
+                "is_read": {
+                    "type": "boolean"
+                },
+                "stream_id": {
+                    "type": "integer"
+                },
+                "streamer_id": {
+                    "type": "integer"
+                },
+                "thumbnail_url": {
+                    "type": "string"
+                },
+                "type": {
+                    "$ref": "#/definitions/model.NotificationType"
+                }
+            }
+        },
+        "dto.NotificationNumResponse": {
+            "type": "object",
+            "properties": {
+                "num": {
+                    "type": "integer"
+                }
+            }
+        },
+        "dto.NotificationReadResponse": {
+            "type": "object",
+            "properties": {
+                "is_read": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "dto.StreamAddShareResponse": {
+            "type": "object",
+            "properties": {
+                "is_added": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "dto.StreamChannelDto": {
+            "type": "object",
+            "properties": {
+                "created_at": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "is_me": {
+                    "type": "boolean"
+                },
+                "is_mute": {
+                    "type": "boolean"
+                },
+                "is_subscribed": {
+                    "type": "boolean"
+                },
+                "streamer_avatar_url": {
+                    "type": "string"
+                },
+                "streamer_name": {
+                    "type": "string"
+                },
+                "total_comment": {
+                    "type": "integer"
+                },
+                "total_like": {
+                    "type": "integer"
+                },
+                "total_share": {
+                    "type": "integer"
+                },
+                "total_subscribe": {
+                    "type": "integer"
+                },
+                "total_video": {
+                    "type": "integer"
+                },
+                "total_view": {
+                    "type": "integer"
+                }
+            }
+        },
+        "dto.StreamDetailDto": {
+            "type": "object",
+            "properties": {
+                "avatar_file_url": {
+                    "type": "string"
+                },
+                "broadcast_url": {
+                    "type": "string"
+                },
+                "categories": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.CategoryDto"
+                    }
+                },
+                "comments": {
+                    "type": "integer"
+                },
+                "created_at": {
+                    "type": "string"
+                },
+                "current_like_type": {
+                    "$ref": "#/definitions/model.LikeEmoteType"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "display_name": {
+                    "type": "string"
+                },
+                "duration": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "is_current_like": {
+                    "type": "boolean"
+                },
+                "is_mute": {
+                    "type": "boolean"
+                },
+                "is_owner": {
+                    "type": "boolean"
+                },
+                "is_saved": {
+                    "type": "boolean"
+                },
+                "is_subscribed": {
+                    "type": "boolean"
+                },
+                "likes": {
+                    "$ref": "#/definitions/dto.LikeInfo"
+                },
+                "scheduled_at": {
+                    "type": "string"
+                },
+                "shares": {
+                    "type": "integer"
+                },
+                "started_at": {
+                    "type": "string"
+                },
+                "status": {
+                    "$ref": "#/definitions/dto.StreamStatus"
+                },
+                "subscriptions": {
+                    "type": "integer"
+                },
+                "thumbnail_url": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "integer"
+                },
+                "video_url": {
+                    "type": "string"
+                },
+                "views": {
+                    "type": "integer"
+                }
+            }
+        },
+        "dto.StreamDto": {
+            "type": "object",
+            "properties": {
+                "avatar_file_url": {
+                    "type": "string"
+                },
+                "display_name": {
+                    "type": "string"
+                },
+                "duration": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "is_saved": {
+                    "type": "boolean"
+                },
+                "scheduled_at": {
+                    "type": "string"
+                },
+                "started_at": {
+                    "type": "string"
+                },
+                "status": {
+                    "$ref": "#/definitions/model.StreamStatus"
+                },
+                "thumbnail_url": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "user_id": {
+                    "type": "integer"
+                },
+                "views": {
+                    "type": "integer"
+                }
+            }
+        },
+        "dto.StreamStatus": {
+            "type": "string",
+            "enum": [
+                "live",
+                "video",
+                "upcoming"
+            ],
+            "x-enum-varnames": [
+                "LIVE",
+                "VIDEO",
+                "UPCOMING"
+            ]
+        },
+        "dto.SubscribeDto": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "integer"
+                },
+                "is_mute": {
+                    "type": "boolean"
+                },
+                "num_subscribed": {
+                    "type": "integer"
+                },
+                "num_video": {
+                    "type": "integer"
+                },
+                "streamer_avatar_url": {
+                    "type": "string"
+                },
+                "streamer_id": {
+                    "type": "integer"
+                },
+                "streamer_name": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.SubscribeMuteRequest": {
+            "type": "object",
+            "required": [
+                "streamer_id"
+            ],
+            "properties": {
+                "is_mute": {
+                    "type": "boolean"
+                },
+                "streamer_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "dto.SubscribeMuteResponse": {
+            "type": "object",
+            "properties": {
+                "is_mute": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "model.LikeEmoteType": {
+            "type": "string",
+            "enum": [
+                "like",
+                "dislike",
+                "laugh",
+                "sad",
+                "wow",
+                "heart"
+            ],
+            "x-enum-varnames": [
+                "LikeEmoteTypeLike",
+                "LikeEmoteTypeDislike",
+                "LikeEmoteTypeLaugh",
+                "LikeEmoteTypeSad",
+                "LikeEmoteTypeWow",
+                "LikeEmoteTypeHeart"
+            ]
+        },
+        "model.NotificationType": {
+            "type": "string",
+            "enum": [
+                "subscribe_live",
+                "subscribe_video",
+                "account_blocked",
+                "account_deleted"
+            ],
+            "x-enum-varnames": [
+                "NotificationTypeSubscribeLive",
+                "NotificationTypeSubscribeVideo",
+                "NotificationTypeBlocked",
+                "NotificationTypeDeleted"
+            ]
+        },
+        "model.RoleType": {
+            "type": "string",
+            "enum": [
+                "super_admin",
+                "admin",
+                "streamer",
+                "user"
+            ],
+            "x-enum-varnames": [
+                "SUPPERADMINROLE",
+                "ADMINROLE",
+                "STREAMER",
+                "USERROLE"
+            ]
+        },
+        "model.StreamStatus": {
+            "type": "string",
+            "enum": [
+                "pending",
+                "started",
+                "ended",
+                "upcoming"
+            ],
+            "x-enum-varnames": [
+                "PENDING",
+                "STARTED",
+                "ENDED",
+                "UPCOMING"
+            ]
+        }
+    },
+    "securityDefinitions": {
+        "BearerAuth": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
+        }
+    }
+}

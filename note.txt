@@ -1,0 +1,21 @@
+Recommend to create tmp folder and related folder first.
+
+For setting up streaming server,
+check docker-compose.yaml in be-api and livego.yaml.
+
+For db, have to run be-admin to generate table structures.
+
+Run admin first and after that be-api.
+
+Most of live things are handled by be-api.
+when be-admin want to make changes(like end live) while being live, it communicate with redis pub sub and one unique cache key.
+
+
+There is cron which check scheduled streams per minutes. If found, stream video.
+There are two places which stream video. websocket handler and cron.
+
+
+there are cron jobs which run at specific time for cleaning up live stream
+./tmp/recordings/
+./tmp/scheduled_videos (not needed anymore after live) after live, all videos will be in tmp/videos/
+shouldn't remove any files from ./tmp/vidoes unless stream is deleted.

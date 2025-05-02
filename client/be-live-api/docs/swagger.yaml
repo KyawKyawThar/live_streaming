@@ -1,0 +1,710 @@
+basePath: /
+definitions:
+  dto.CategoryDto:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+    type: object
+  dto.LikeInfo:
+    properties:
+      dislike:
+        type: integer
+      heart:
+        type: integer
+      laugh:
+        type: integer
+      like:
+        type: integer
+      sad:
+        type: integer
+      total:
+        type: integer
+      wow:
+        type: integer
+    type: object
+  dto.LoginRequest:
+    properties:
+      password:
+        minLength: 4
+        type: string
+      username:
+        minLength: 4
+        type: string
+    required:
+    - password
+    - username
+    type: object
+  dto.LoginResponse:
+    properties:
+      avatar_file_url:
+        type: string
+      display_name:
+        type: string
+      email:
+        type: string
+      expiration_time:
+        type: string
+      id:
+        type: integer
+      role_type:
+        $ref: '#/definitions/model.RoleType'
+      token:
+        type: string
+      username:
+        type: string
+    type: object
+  dto.NotificationDto:
+    properties:
+      avatar_url:
+        type: string
+      content:
+        type: string
+      created_at:
+        type: string
+      id:
+        type: integer
+      is_mute:
+        type: boolean
+      is_read:
+        type: boolean
+      stream_id:
+        type: integer
+      streamer_id:
+        type: integer
+      thumbnail_url:
+        type: string
+      type:
+        $ref: '#/definitions/model.NotificationType'
+    type: object
+  dto.NotificationNumResponse:
+    properties:
+      num:
+        type: integer
+    type: object
+  dto.NotificationReadResponse:
+    properties:
+      is_read:
+        type: boolean
+    type: object
+  dto.StreamAddShareResponse:
+    properties:
+      is_added:
+        type: boolean
+    type: object
+  dto.StreamChannelDto:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: integer
+      is_me:
+        type: boolean
+      is_mute:
+        type: boolean
+      is_subscribed:
+        type: boolean
+      streamer_avatar_url:
+        type: string
+      streamer_name:
+        type: string
+      total_comment:
+        type: integer
+      total_like:
+        type: integer
+      total_share:
+        type: integer
+      total_subscribe:
+        type: integer
+      total_video:
+        type: integer
+      total_view:
+        type: integer
+    type: object
+  dto.StreamDetailDto:
+    properties:
+      avatar_file_url:
+        type: string
+      broadcast_url:
+        type: string
+      categories:
+        items:
+          $ref: '#/definitions/dto.CategoryDto'
+        type: array
+      comments:
+        type: integer
+      created_at:
+        type: string
+      current_like_type:
+        $ref: '#/definitions/model.LikeEmoteType'
+      description:
+        type: string
+      display_name:
+        type: string
+      duration:
+        type: integer
+      id:
+        type: integer
+      is_current_like:
+        type: boolean
+      is_mute:
+        type: boolean
+      is_owner:
+        type: boolean
+      is_saved:
+        type: boolean
+      is_subscribed:
+        type: boolean
+      likes:
+        $ref: '#/definitions/dto.LikeInfo'
+      scheduled_at:
+        type: string
+      shares:
+        type: integer
+      started_at:
+        type: string
+      status:
+        $ref: '#/definitions/dto.StreamStatus'
+      subscriptions:
+        type: integer
+      thumbnail_url:
+        type: string
+      title:
+        type: string
+      user_id:
+        type: integer
+      video_url:
+        type: string
+      views:
+        type: integer
+    type: object
+  dto.StreamDto:
+    properties:
+      avatar_file_url:
+        type: string
+      display_name:
+        type: string
+      duration:
+        type: integer
+      id:
+        type: integer
+      is_saved:
+        type: boolean
+      scheduled_at:
+        type: string
+      started_at:
+        type: string
+      status:
+        $ref: '#/definitions/model.StreamStatus'
+      thumbnail_url:
+        type: string
+      title:
+        type: string
+      user_id:
+        type: integer
+      views:
+        type: integer
+    type: object
+  dto.StreamStatus:
+    enum:
+    - live
+    - video
+    - upcoming
+    type: string
+    x-enum-varnames:
+    - LIVE
+    - VIDEO
+    - UPCOMING
+  dto.SubscribeDto:
+    properties:
+      id:
+        type: integer
+      is_mute:
+        type: boolean
+      num_subscribed:
+        type: integer
+      num_video:
+        type: integer
+      streamer_avatar_url:
+        type: string
+      streamer_id:
+        type: integer
+      streamer_name:
+        type: string
+    type: object
+  dto.SubscribeMuteRequest:
+    properties:
+      is_mute:
+        type: boolean
+      streamer_id:
+        type: integer
+    required:
+    - streamer_id
+    type: object
+  dto.SubscribeMuteResponse:
+    properties:
+      is_mute:
+        type: boolean
+    type: object
+  model.LikeEmoteType:
+    enum:
+    - like
+    - dislike
+    - laugh
+    - sad
+    - wow
+    - heart
+    type: string
+    x-enum-varnames:
+    - LikeEmoteTypeLike
+    - LikeEmoteTypeDislike
+    - LikeEmoteTypeLaugh
+    - LikeEmoteTypeSad
+    - LikeEmoteTypeWow
+    - LikeEmoteTypeHeart
+  model.NotificationType:
+    enum:
+    - subscribe_live
+    - subscribe_video
+    - account_blocked
+    - account_deleted
+    type: string
+    x-enum-varnames:
+    - NotificationTypeSubscribeLive
+    - NotificationTypeSubscribeVideo
+    - NotificationTypeBlocked
+    - NotificationTypeDeleted
+  model.RoleType:
+    enum:
+    - super_admin
+    - admin
+    - streamer
+    - user
+    type: string
+    x-enum-varnames:
+    - SUPPERADMINROLE
+    - ADMINROLE
+    - STREAMER
+    - USERROLE
+  model.StreamStatus:
+    enum:
+    - pending
+    - started
+    - ended
+    - upcoming
+    type: string
+    x-enum-varnames:
+    - PENDING
+    - STARTED
+    - ENDED
+    - UPCOMING
+host: localhost:8787
+info:
+  contact: {}
+  description: Swagger API Live Stream.
+  title: API Live Stream
+  version: "1.0"
+paths:
+  /api/auth/login:
+    post:
+      consumes:
+      - application/json
+      description: Authenticates the user and returns a JWT token
+      parameters:
+      - description: User Login Data
+        in: body
+        name: login
+        required: true
+        schema:
+          $ref: '#/definitions/dto.LoginRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Login successful
+          schema:
+            $ref: '#/definitions/dto.LoginResponse'
+        "400":
+          description: Invalid request
+      summary: Login a user
+      tags:
+      - Auth
+  /api/notification/{id}/hidden:
+    put:
+      consumes:
+      - application/json
+      description: Update notification has been hidden by NotificationID
+      parameters:
+      - description: Notification ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "401":
+          description: Unauthorized
+      security:
+      - BearerAuth: []
+      summary: Hidden Notification
+      tags:
+      - Notification
+  /api/notification/{id}/read:
+    put:
+      consumes:
+      - application/json
+      description: Update notification has been read by NotificationID
+      parameters:
+      - description: Notification ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.NotificationReadResponse'
+        "401":
+          description: Unauthorized
+      security:
+      - BearerAuth: []
+      summary: Read Notification
+      tags:
+      - Notification
+  /api/notification/list:
+    get:
+      consumes:
+      - application/json
+      description: Get notification list
+      parameters:
+      - description: Page number
+        in: query
+        name: page
+        required: true
+        type: integer
+      - description: Number of items per page
+        in: query
+        name: limit
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.NotificationDto'
+            type: array
+        "401":
+          description: Unauthorized
+      security:
+      - BearerAuth: []
+      summary: Get Notifications
+      tags:
+      - Notification
+  /api/notification/num:
+    get:
+      consumes:
+      - application/json
+      description: Get the number of notifications
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.NotificationNumResponse'
+        "401":
+          description: Unauthorized
+      security:
+      - BearerAuth: []
+      summary: Get Num-Notification
+      tags:
+      - Notification
+  /api/notification/reset-num:
+    put:
+      consumes:
+      - application/json
+      description: Reset the number of notifications
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.NotificationNumResponse'
+        "401":
+          description: Unauthorized
+      security:
+      - BearerAuth: []
+      summary: Reset Num-Notification
+      tags:
+      - Notification
+  /api/streams:
+    get:
+      consumes:
+      - application/json
+      description: Fetch a list of streams with optional filters
+      parameters:
+      - default: 1
+        description: Page number
+        in: query
+        name: page
+        type: integer
+      - default: 10
+        description: Number of items per page
+        in: query
+        name: limit
+        type: integer
+      - default: ""
+        description: Status of the stream
+        in: query
+        name: status
+        type: string
+      - description: Title filter
+        in: query
+        name: title
+        type: string
+      - collectionFormat: multi
+        description: Category IDs
+        in: query
+        items:
+          type: integer
+        name: category_ids
+        type: array
+      - description: Filter by user streams
+        in: query
+        name: is_me
+        type: boolean
+      - description: Filter by liked streams
+        in: query
+        name: is_liked
+        type: boolean
+      - description: Filter by history streams
+        in: query
+        name: is_history
+        type: boolean
+      - description: Filter by saved streams
+        in: query
+        name: is_saved
+        type: boolean
+      - description: Filter by streamer
+        in: query
+        name: streamer_id
+        type: integer
+      - description: Start date for filtering (yyyy-MM-dd)
+        in: query
+        name: from_date
+        type: string
+      - description: End date for filtering (yyyy-MM-dd)
+        in: query
+        name: to_date
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.StreamDto'
+            type: array
+        "401":
+          description: Unauthorized
+      security:
+      - BearerAuth: []
+      summary: Get Streams
+      tags:
+      - Stream
+  /api/streams/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Fetch detailed information of a specific stream by ID
+      parameters:
+      - description: Stream ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.StreamDetailDto'
+        "401":
+          description: Unauthorized
+      security:
+      - BearerAuth: []
+      summary: Get Stream Details
+      tags:
+      - Stream
+  /api/streams/{id}/bookmark:
+    delete:
+      consumes:
+      - application/json
+      description: Remove the bookmark stream by ID
+      parameters:
+      - description: ID stream
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "401":
+          description: Unauthorized
+      security:
+      - BearerAuth: []
+      summary: Remove the bookmark stream
+      tags:
+      - Stream
+    post:
+      consumes:
+      - application/json
+      description: Bookmark stream by ID
+      parameters:
+      - description: ID stream
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+        "401":
+          description: Unauthorized
+      security:
+      - BearerAuth: []
+      summary: Bookmark stream
+      tags:
+      - Stream
+  /api/streams/{id}/share:
+    post:
+      consumes:
+      - application/json
+      description: User adds 1 share
+      parameters:
+      - description: ID stream
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.StreamAddShareResponse'
+        "401":
+          description: Unauthorized
+      security:
+      - BearerAuth: []
+      summary: Add Share
+      tags:
+      - Stream
+  /api/streams/channel/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get channel insights and statistics
+      parameters:
+      - description: ID streamer
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.StreamChannelDto'
+        "401":
+          description: Unauthorized
+      security:
+      - BearerAuth: []
+      summary: Get Channel
+      tags:
+      - Stream
+  /api/subscribe/list:
+    get:
+      consumes:
+      - application/json
+      description: Fetch a list of subscribes with optional filters
+      parameters:
+      - default: 1
+        description: Page number
+        in: query
+        name: page
+        type: integer
+      - default: 10
+        description: Number of items per page
+        in: query
+        name: limit
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.SubscribeDto'
+            type: array
+        "401":
+          description: Unauthorized
+      security:
+      - BearerAuth: []
+      summary: Get Subscribes
+      tags:
+      - Subscribe
+  /api/subscribe/mute:
+    put:
+      consumes:
+      - application/json
+      description: Mute subscriber notifications
+      parameters:
+      - description: Mute subscriber notifications
+        in: body
+        name: mute
+        required: true
+        schema:
+          $ref: '#/definitions/dto.SubscribeMuteRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/dto.SubscribeMuteResponse'
+        "400":
+          description: Invalid request
+      security:
+      - BearerAuth: []
+      summary: Mute
+      tags:
+      - Subscribe
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"

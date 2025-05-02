@@ -1,0 +1,37 @@
+database:
+  host: localhost
+  port: 5432
+  user: postgres
+  pass: postgres
+  name: live_stream
+
+web:
+  port: 8787
+
+file_storage:
+  root_folder: ./tmpl
+  thumbnail_folder: ./tmpl/thumbnail/
+  avatar_folder: ./tmpl/avatar/
+  live_folder: ./tmpl/recordings/live/
+  scheduled_videos_folder: ./tmpl/scheduled_videos/
+  video_folder: ./tmpl/videos/
+
+api_file:
+  url: http://localhost:8787
+
+stream_server:
+  http_url: http://localhost:8090
+  rtmp_url: rtmp://localhost:1935/live
+  hls_url: http://localhost:7002/live
+
+auth:
+  secret_key: live&^stream^%2024@
+
+mail:
+  email: username@gmail.com
+  password: alkdjklanbvudjehje
+  host: smtp.gmail.com
+  port: 587
+
+2fa_auth:
+  issuer: live-stream.org

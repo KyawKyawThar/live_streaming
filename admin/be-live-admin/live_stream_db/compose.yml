@@ -1,0 +1,20 @@
+services:
+  postgres:
+    image: postgres:16.2-alpine
+    networks:
+      - live-network
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=live_stream
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./db-data/postgres:/var/lib/postgresql/data
+
+networks:
+  live-network:
+    name: live-network
+
+volumes:
+  data-volume:
